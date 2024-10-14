@@ -16,10 +16,7 @@ public class MathsServiceTest {
 
         Long factorial = MathsServices.factorial(testNumber);
 
-        if (factorial != 120){
-            throw new Exception("unexpected value returned by factorial");
-        }
-        System.out.println(factorial);
+        assertThat(factorial).isEqualTo(120);
     }
 
 
@@ -29,10 +26,16 @@ public class MathsServiceTest {
         int testNumber = -5;
 
         //when
-        Long factorial = MathsServices.factorial(testNumber);
+        Exception exception = null;
+        try {
+            MathsServices.factorial(testNumber);
+        }catch (Exception e){
+            exception = e;
+        }
 
         //then
-        assertThat(factorial).isEqualTo(120L);
+        assertThat(exception).isNotNull();
+        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
