@@ -60,7 +60,7 @@ public class MathsServiceTest {
 
     @Test
     public void testZero() throws Exception {
-        LOGGER.info("testZero");
+        LOGGER.warn("testZero");
         int testNumber = 0;
         Long factorial = MathsServices.factorial(testNumber);
         if (factorial != 1){
