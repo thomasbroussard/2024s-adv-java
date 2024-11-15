@@ -16,16 +16,11 @@ public class QuestionDAO {
     // Connection acquisition method
     private static Connection getConnection() throws SQLException {
         Configuration configuration = null;
-        try {
-            configuration = new Configuration();
-            String dbUrl = configuration.getValue("db.url");
-            String dbUser = configuration.getValue("db.user");
-            String dbPassword = configuration.getValue("db.pwd");
-            return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        configuration = Configuration.getInstance();
+        String dbUrl = configuration.getValue("db.url");
+        String dbUser = configuration.getValue("db.user");
+        String dbPassword = configuration.getValue("db.pwd");
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
     // Static initializer to ensure the table is created

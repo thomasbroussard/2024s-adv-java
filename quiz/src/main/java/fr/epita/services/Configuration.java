@@ -13,7 +13,20 @@ public class Configuration {
     public static final String CONF_PROPERTIES_FALL_BACK = "conf.properties";
     private final Properties properties;
 
-    public Configuration() throws IOException {
+    private static Configuration instance;
+
+    public static Configuration getInstance(){
+        if (instance == null){
+            try {
+                instance = new Configuration();
+            } catch (Exception e){
+                throw new IllegalStateException("the program was not able to load the configuration");
+            }
+        }
+        return instance;
+    }
+
+    private Configuration() throws IOException {
         this.properties = new Properties();
         String confLocation = System.getProperty("conf.location");
         if (confLocation == null
