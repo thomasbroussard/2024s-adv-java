@@ -32,6 +32,10 @@ public class MathsServiceTest {
     public void testNominal() throws Exception {
         LOGGER.info("testNominal");
         int testNumber = 5;
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement el: stackTrace) {
+            LOGGER.trace(el.getClassName() + ":" +el.getLineNumber());
+        }
 
         Long factorial = MathsServices.factorial(testNumber);
 

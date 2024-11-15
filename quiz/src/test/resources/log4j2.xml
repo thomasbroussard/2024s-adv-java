@@ -12,7 +12,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="fr.epita.MathsServiceTest" level="DEBUG"/>
+        <Logger name="fr.epita" level="ALL"/>
         <Root level="WARN">
             <AppenderRef ref="CONSOLE"/>
         </Root>
