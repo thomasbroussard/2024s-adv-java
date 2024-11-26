@@ -12,6 +12,8 @@ public class Question {
     public Question(String text) {
         this.text = text;
     }
+    public Question() {
+    }
 
     // Getters and setters
     public int getId() {

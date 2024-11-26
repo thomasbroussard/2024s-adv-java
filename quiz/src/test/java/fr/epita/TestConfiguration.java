@@ -1,5 +1,6 @@
 package fr.epita;
 
+import fr.epita.services.ChoiceDAO;
 import fr.epita.services.QuestionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,10 @@ public class TestConfiguration {
     @Bean("test")
     public QuestionDAO getQuestionDAO(@Autowired DataSource ds){
         return new QuestionDAO(ds);
+    }
+    @Bean("test")
+    public ChoiceDAO getChoiceDAO(@Autowired DataSource ds){
+        return new ChoiceDAO(ds);
     }
 
 

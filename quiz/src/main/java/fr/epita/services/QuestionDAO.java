@@ -32,7 +32,7 @@ public class QuestionDAO {
     public void addQuestion(Question question) {
         String query = "INSERT INTO Question (text) VALUES (?)";
         try (Connection connection = ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, question.getText());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
