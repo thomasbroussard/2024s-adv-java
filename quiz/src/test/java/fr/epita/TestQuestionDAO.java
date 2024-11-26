@@ -4,10 +4,24 @@ import fr.epita.quiz.datamodel.Question;
 import fr.epita.services.QuestionDAO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = TestConfiguration.class)
 public class TestQuestionDAO {
+
+
+    @Autowired
+    @Qualifier("test")
+    QuestionDAO questionDAO;
+
 
     @Test
     public void testDAO(){
@@ -15,7 +29,6 @@ public class TestQuestionDAO {
         Question question = new Question("what is a singleton?");
 
         //when
-        QuestionDAO questionDAO = new QuestionDAO();
         questionDAO.addQuestion(question);
         List<Question> allQuestions = questionDAO.getAllQuestions();
 
