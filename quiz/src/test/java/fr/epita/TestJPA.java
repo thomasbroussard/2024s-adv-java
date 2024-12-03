@@ -1,64 +1,48 @@
 package fr.epita;
 
-import fr.epita.services.ChoiceDAO;
-import fr.epita.services.QuestionDAO;
+import fr.epita.quiz.datamodel.Question;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
-import java.util.Properties;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-@Configuration
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = TestConfiguration.class)
+@Commit
 public class TestJPA {
 
-    @Bean
-    public DataSource getDataSource(){
-        fr.epita.services.Configuration conf = fr.epita.services.Configuration.getInstance();
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        String dbUrl = conf.getValue("db.url");
-        String dbUser = conf.getValue("db.user");
-        String dbPassword = conf.getValue("db.pwd");
-        ds.setUrl(dbUrl);
-        ds.setPassword(dbPassword);
-        ds.setUsername(dbUser);
-        return ds;
-    }
+    @PersistenceContext
+    EntityManager em;
 
-    @Bean("test")
-    public QuestionDAO getQuestionDAO(@Autowired DataSource ds){
-        return new QuestionDAO(ds);
-    }
+    @Autowired
+    DataSource ds;
 
 
-    @Bean("test")
-    public ChoiceDAO getChoiceDAO(@Autowired DataSource ds){
-        return new ChoiceDAO(ds);
-    }
+    @Test
+    public void testEMTEST() throws SQLException {
+        Question question = new Question("what is JPA?");
 
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        em.persist(question);
 
-        // Set the JPA provider to Hibernate
-        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-        // Set the DataSource
-        factoryBean.setDataSource(dataSource);
+        ResultSet resultSet = ds.getConnection()
+                .prepareStatement("SELECT * FROM QUESTIONS")
+                .executeQuery();
 
-        // Specify the package containing your entity classes
-        factoryBean.setPackagesToScan("fr.epita.quiz.datamodel");
+        while (resultSet.next()){
+            System.out.println(resultSet.getString("title"));
+        }
 
-        // Configure Hibernate properties
-        Properties jpaProperties = new Properties();
-        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create");
-        jpaProperties.setProperty("hibernate.show_sql", "true");
-        factoryBean.setJpaProperties(jpaProperties);
 
-        return factoryBean;
     }
 
 

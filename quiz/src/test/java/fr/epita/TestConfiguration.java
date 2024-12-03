@@ -2,13 +2,10 @@ package fr.epita;
 
 import fr.epita.services.ChoiceDAO;
 import fr.epita.services.QuestionDAO;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
@@ -31,17 +28,18 @@ public class TestConfiguration {
         return ds;
     }
 
-    @Bean("test")
+   // @Bean("test")
     public QuestionDAO getQuestionDAO(@Autowired DataSource ds){
         return new QuestionDAO(ds);
     }
 
 
-    @Bean("test")
+   // @Bean("test")
     public ChoiceDAO getChoiceDAO(@Autowired DataSource ds){
         return new ChoiceDAO(ds);
     }
 
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
 

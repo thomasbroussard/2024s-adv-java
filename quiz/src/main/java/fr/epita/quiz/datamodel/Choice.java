@@ -4,7 +4,7 @@ package fr.epita.quiz.datamodel;
 import jakarta.persistence.*;
 
 @Entity
-@Table("CHOICES")
+@Table(name="CHOICES")
 public class Choice {
 
     @Id
