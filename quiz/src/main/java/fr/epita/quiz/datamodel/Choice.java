@@ -1,13 +1,22 @@
 package fr.epita.quiz.datamodel;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table("CHOICES")
 public class Choice {
 
+    @Id
     private int id;
+
+    @Column(name = "MY_EXISTING_COLUMN_NAME")
     private String optionText;
     private boolean valid;
 
     private int order;
 
+    @ManyToOne
     private Question questionRef;
 
 

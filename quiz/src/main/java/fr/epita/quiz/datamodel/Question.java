@@ -1,6 +1,14 @@
 package fr.epita.quiz.datamodel;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table("QUESTIONS")
 public class Question {
+
+    @Id
     private int id;       // Primary key
     private String text;  // Question text
 
