@@ -1,16 +1,21 @@
 package fr.epita.quiz.datamodel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="QUESTIONS")
+@Table(name = "QUESTIONS")
 public class Question {
 
     @Id
-    private int id;       // Primary key
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id; // Primary key
+
+    @Column(name="TEXT")
     private String text;  // Question text
+
+
+
 
     public Question(int id, String text) {
         this.id = id;

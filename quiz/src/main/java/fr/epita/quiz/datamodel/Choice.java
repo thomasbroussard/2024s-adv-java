@@ -8,10 +8,14 @@ import jakarta.persistence.*;
 public class Choice {
 
     @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "MY_EXISTING_COLUMN_NAME")
+    @Column(name = "OPTION_TEXT")
     private String optionText;
+
+    @Column(name = "VALID")
     private boolean valid;
 
     @Column(name = "displayOrder")
