@@ -14,6 +14,7 @@ public class Choice {
     private String optionText;
     private boolean valid;
 
+    @Column(name = "displayOrder")
     private int order;
 
     @ManyToOne

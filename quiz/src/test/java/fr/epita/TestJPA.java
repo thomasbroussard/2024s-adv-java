@@ -3,6 +3,7 @@ package fr.epita;
 import fr.epita.quiz.datamodel.Question;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 @Commit
+@Transactional
 public class TestJPA {
 
     @PersistenceContext
@@ -28,6 +30,7 @@ public class TestJPA {
 
 
     @Test
+    @Transactional
     public void testEMTEST() throws SQLException {
         Question question = new Question("what is JPA?");
 

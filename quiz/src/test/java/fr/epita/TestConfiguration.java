@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
@@ -28,6 +29,11 @@ public class TestConfiguration {
         return ds;
     }
 
+    @Bean
+    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory.getObject());
+    }
+
    // @Bean("test")
     public QuestionDAO getQuestionDAO(@Autowired DataSource ds){
         return new QuestionDAO(ds);
@@ -42,25 +48,17 @@ public class TestConfiguration {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-
-        // Set the JPA provider to Hibernate
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setPackagesToScan("fr.epita.quiz.datamodel");
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-        // Set the DataSource
-        factoryBean.setDataSource(dataSource);
-
-        // Specify the package containing your entity classes
-        factoryBean.setPackagesToScan("fr.epita.quiz.datamodel");
-
-        // Configure Hibernate properties
         Properties jpaProperties = new Properties();
-        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         jpaProperties.setProperty("hibernate.show_sql", "true");
-        factoryBean.setJpaProperties(jpaProperties);
 
+        factoryBean.setJpaProperties(jpaProperties);
         return factoryBean;
     }
-
 
 }
