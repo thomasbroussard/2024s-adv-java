@@ -1,12 +1,9 @@
 package fr.epita.services;
 
-import fr.epita.quiz.datamodel.Choice;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
-import java.util.List;
-
-public class GenericJPADAO<T> {
+public class GenericJPADAO<T, ID> {
 
     EntityManager em;
 
@@ -29,6 +26,11 @@ public class GenericJPADAO<T> {
     @Transactional
     public void delete(T entityInstance) {
         em.remove(entityInstance);
+    }
+    // Delete a question by ID
+    @Transactional
+    public void deleteById(Class<T> objectClass, ID id) {
+        em.remove(em.find(objectClass, id));
     }
 
 }
