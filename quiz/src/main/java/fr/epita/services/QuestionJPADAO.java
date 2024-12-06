@@ -2,13 +2,8 @@ package fr.epita.services;
 
 import fr.epita.quiz.datamodel.Question;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,19 +18,19 @@ public class QuestionJPADAO {
 
     // Add a question
     @Transactional
-    public void addQuestion(Question question) {
+    public void add(Question question) {
         em.persist(question);
     }
 
     // Get all questions
-    public List<Question> getAllQuestions() {
+    public List<Question> listAll() {
         return em.createQuery("from Question", Question.class).getResultList();
 
     }
 
     // Delete a question by ID
     @Transactional
-    public void deleteQuestion(int id) {
+    public void deleteById(int id) {
         Question question = em.find(Question.class, id);
         em.remove(question);
     }
