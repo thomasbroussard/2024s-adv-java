@@ -25,7 +25,15 @@ public class QuizDataService {
     }
 
     //create a MCQ question
-    public void createMCQQuestion(Question question, List<Choice> choiceList){
+    public void createMCQQuestion(Question question, List<Choice> choiceList) {
+
+        questionDAO.add(question);
+
+        //check before if there's at least one valid choice
+        for (Choice choice: choiceList){
+            choice.setQuestionRef(question);
+            choiceDAO.add(choice);
+        }
 
     }
 
