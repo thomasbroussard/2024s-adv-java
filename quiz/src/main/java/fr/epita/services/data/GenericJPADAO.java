@@ -1,4 +1,4 @@
-package fr.epita.services;
+package fr.epita.services.data;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

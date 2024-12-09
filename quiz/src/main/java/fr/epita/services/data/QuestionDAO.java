@@ -1,10 +1,9 @@
-package fr.epita.services;
+package fr.epita.services.data;
 
 import fr.epita.quiz.datamodel.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

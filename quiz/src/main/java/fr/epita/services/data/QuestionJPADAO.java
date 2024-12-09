@@ -1,8 +1,7 @@
-package fr.epita.services;
+package fr.epita.services.data;
 
 import fr.epita.quiz.datamodel.Question;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
