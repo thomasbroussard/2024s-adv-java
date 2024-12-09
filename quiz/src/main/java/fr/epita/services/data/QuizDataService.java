@@ -8,10 +8,15 @@ import java.util.List;
 public class QuizDataService {
 
     QuestionJPADAO questionDAO;
-    ChoiceDAO choiceDAO;
+    ChoiceJPADAO choiceDAO;
 
     public QuizDataService(){
 
+    }
+
+    public QuizDataService(QuestionJPADAO questionJPADAO, ChoiceJPADAO choiceJPADAO) {
+        this.questionDAO = questionJPADAO;
+        this.choiceDAO = choiceJPADAO;
     }
 
     //create a text question

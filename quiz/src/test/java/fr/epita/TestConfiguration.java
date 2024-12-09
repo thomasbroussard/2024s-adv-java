@@ -1,9 +1,6 @@
 package fr.epita;
 
-import fr.epita.services.data.ChoiceDAO;
-import fr.epita.services.data.ChoiceJPADAO;
-import fr.epita.services.data.QuestionDAO;
-import fr.epita.services.data.QuestionJPADAO;
+import fr.epita.services.data.*;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +47,12 @@ public class TestConfiguration {
     @Bean
     public ChoiceJPADAO getChoiceJPADAO(@Autowired EntityManager em){
         return new ChoiceJPADAO(em);
+    }
+    @Bean
+    public QuizDataService getQuizDataService(QuestionJPADAO questionJPADAO, ChoiceJPADAO choiceJPADAO){
+        return new QuizDataService(questionJPADAO, choiceJPADAO);
+
+
     }
 
 
