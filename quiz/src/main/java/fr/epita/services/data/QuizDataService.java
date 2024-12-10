@@ -2,10 +2,15 @@ package fr.epita.services.data;
 
 import fr.epita.quiz.datamodel.Choice;
 import fr.epita.quiz.datamodel.Question;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
 public class QuizDataService {
+
+    @PersistenceContext
+    EntityManager em;
 
     QuestionJPADAO questionDAO;
     ChoiceJPADAO choiceDAO;
@@ -37,4 +42,7 @@ public class QuizDataService {
 
     }
 
+    public List<Question> getAllQuestions() {
+       return em.createQuery("from Question", Question.class).getResultList();
+    }
 }

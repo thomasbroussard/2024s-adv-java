@@ -45,7 +45,6 @@ public class TestQuizDataService {
     }
 
     //REQ-0002: as a user I can create mcq questions
-
     @Test
     public void testMCQQuestionCreation() throws SQLException {
         //given: a question and a question data service

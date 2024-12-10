@@ -1,6 +1,8 @@
-package fr.epita;
+package fr.epita.quiz.rest;
 
-import fr.epita.services.data.*;
+import fr.epita.services.data.ChoiceJPADAO;
+import fr.epita.services.data.QuestionJPADAO;
+import fr.epita.services.data.QuizDataService;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,8 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-public class TestConfiguration {
+public class AppConfiguration {
+
 
     @Bean
     public DataSource getDataSource(){
@@ -29,6 +32,29 @@ public class TestConfiguration {
         return ds;
     }
 
+    @Bean
+    public EntityManager entityManager(LocalContainerEntityManagerFactoryBean factoryBean) {
+        return factoryBean.getObject().createEntityManager();
+    }
+
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setPackagesToScan("fr.epita.quiz.datamodel");
+        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+        Properties jpaProperties = new Properties();
+
+        //TODO this should be handled by configuration, eg not hardcoded
+        jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        jpaProperties.setProperty("hibernate.show_sql", "true");
+
+        factoryBean.setJpaProperties(jpaProperties);
+        return factoryBean;
+    }
     @Bean
     public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory.getObject());
@@ -46,24 +72,7 @@ public class TestConfiguration {
     @Bean
     public QuizDataService getQuizDataService(QuestionJPADAO questionJPADAO, ChoiceJPADAO choiceJPADAO){
         return new QuizDataService(questionJPADAO, choiceJPADAO);
-
-
     }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("fr.epita.quiz.datamodel");
-        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-
-        Properties jpaProperties = new Properties();
-        jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create");
-        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        jpaProperties.setProperty("hibernate.show_sql", "true");
-
-        factoryBean.setJpaProperties(jpaProperties);
-        return factoryBean;
-    }
 
 }
