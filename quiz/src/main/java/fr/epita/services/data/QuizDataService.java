@@ -4,8 +4,10 @@ import fr.epita.quiz.datamodel.Choice;
 import fr.epita.quiz.datamodel.Question;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
+
 
 public class QuizDataService {
 
@@ -25,6 +27,7 @@ public class QuizDataService {
     }
 
     //create a text question
+    @Transactional
     public void createQuestion(Question question){
         questionDAO.add(question);
     }

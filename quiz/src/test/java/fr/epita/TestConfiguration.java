@@ -2,6 +2,7 @@ package fr.epita;
 
 import fr.epita.services.data.*;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,13 +36,13 @@ public class TestConfiguration {
     }
 
     @Bean
-    public QuestionJPADAO getQuestionJPADAO(@Autowired EntityManager em){
-        return new QuestionJPADAO(em);
+    public QuestionJPADAO getQuestionJPADAO(@Autowired EntityManagerFactory em){
+        return new QuestionJPADAO(em.createEntityManager());
     }
 
     @Bean
-    public ChoiceJPADAO getChoiceJPADAO(@Autowired EntityManager em){
-        return new ChoiceJPADAO(em);
+    public ChoiceJPADAO getChoiceJPADAO(@Autowired EntityManagerFactory em){
+        return new ChoiceJPADAO(em.createEntityManager());
     }
     @Bean
     public QuizDataService getQuizDataService(QuestionJPADAO questionJPADAO, ChoiceJPADAO choiceJPADAO){
